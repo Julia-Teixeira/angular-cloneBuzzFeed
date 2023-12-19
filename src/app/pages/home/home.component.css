@@ -1,0 +1,57 @@
+.home__container {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 1rem;
+
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.home__button {
+  background-color: transparent;
+  color: #ffffff;
+
+  border-radius: 8px;
+  border: 1px solid #18ab29;
+
+  width: 100%;
+
+  display: inline-block;
+  cursor: pointer;
+
+  font-size: 1.063rem;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+
+  padding: 1rem 1.938rem;
+}
+
+.home__button:hover {
+  background-color: #5cbf2a;
+}
+
+.home__button:active {
+  position: relative;
+  top: 1px;
+}
+
+.quizz__card h2 {
+  font-size: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .home__container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .quizz__card h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .quizz__card h2 {
+    font-size: 1.5rem;
+  }
+}

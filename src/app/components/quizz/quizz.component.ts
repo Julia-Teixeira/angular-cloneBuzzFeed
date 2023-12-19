@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Option, Question } from './quizz.component.interface';
+import { Component, Input, OnInit } from '@angular/core';
+import { Question, Quizz } from './quizz.component.interface';
 import quizz_questions from './../../../assets/data/quizz_questions.json';
 
 @Component({
@@ -8,13 +8,15 @@ import quizz_questions from './../../../assets/data/quizz_questions.json';
   styleUrls: ['./quizz.component.css'],
 })
 export class QuizzComponent implements OnInit {
+  @Input() idQuizz: number = 0;
   title: string = '';
 
+  quizz: Quizz | undefined = {} as Quizz;
   questions: Question[] = [];
   questionsSelected: Question = {} as Question;
 
   answers: string[] = [];
-  answerSelected: string = '';
+  answerSelected: string | undefined = '';
 
   questionIndex: number = 0;
   questionMaxIndex: number = this.questions.length;
@@ -24,16 +26,21 @@ export class QuizzComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.quizz = this.getQuestionByIndex(+this.idQuizz);
+
     if (quizz_questions) {
       this.finished = false;
-      this.title = quizz_questions.title;
-      this.questions = quizz_questions.questions;
+      this.title = this.quizz!.title;
+      this.questions = this.quizz!.questions;
 
       this.questionsSelected = this.questions[this.questionIndex];
       this.questionMaxIndex = this.questions.length;
     }
   }
 
+  getQuestionByIndex(index: number) {
+    return quizz_questions.find((item) => item.id === index);
+  }
   playerChoose(value: string) {
     this.answers.push(value);
     this.nextStep();
@@ -63,7 +70,7 @@ export class QuizzComponent implements OnInit {
     });
 
     this.answerSelected =
-      quizz_questions.results[result as keyof typeof quizz_questions.results];
+      this.quizz?.results[result as keyof typeof this.quizz.results];
   }
 
   restart() {
